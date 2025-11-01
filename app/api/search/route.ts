@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { mapITunesApiItemToResult } from "@/mapper/itunes-search.mapper";
+import { saveSearchResults } from "@/lib/firestore";
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -25,6 +26,7 @@ export async function GET(request: Request) {
 
     const data = await response.json();
     const results = data.results.map(mapITunesApiItemToResult);
+    await saveSearchResults(results, term);
 
     return NextResponse.json({
       resultCount: results.length,

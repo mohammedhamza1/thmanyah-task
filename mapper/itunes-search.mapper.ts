@@ -20,17 +20,17 @@ export function mapITunesApiItemToResult(
   item: ITunesApiItem
 ): ItunesSearchResult {
   return {
-    trackId: item.trackId,
+    trackId: item.trackId || 0,
     trackName: item.trackName || "",
     artistName: item.artistName || "",
-    artworkUrl100: item.artworkUrl100,
-    artworkUrl600: item.artworkUrl600,
-    collectionName: item.collectionName,
-    collectionViewUrl: item.collectionViewUrl,
-    trackViewUrl: item.trackViewUrl,
-    feedUrl: item.feedUrl,
-    genre: item.primaryGenreName,
-    releaseDate: item.releaseDate,
-    country: item.country,
+    artworkUrl100: item.artworkUrl100 || "",
+    artworkUrl600: item.artworkUrl600 || "",
+    collectionName: item.collectionName || "",
+    collectionViewUrl: item.collectionViewUrl || "",
+    trackViewUrl: item.trackViewUrl || "",
+    feedUrl: item.feedUrl || "",
+    genre: item.primaryGenreName || "",
+    releaseDate: item.releaseDate || "",
+    country: item.country || "",
   };
 }
