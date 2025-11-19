@@ -11,6 +11,7 @@ function SearchContent() {
   const searchParams = useSearchParams();
   const term = searchParams.get("term");
   const [searchTerm, setSearchTerm] = useState(term || "");
+  const [searchedTerm, setSearchedTerm] = useState(term || "");
   const [podcasts, setPodcasts] = useState<ItunesSearchResult[]>([]);
   const [episodes, setEpisodes] = useState<ItunesSearchResult[]>([]);
   const [loading, setLoading] = useState(false);
@@ -26,6 +27,7 @@ function SearchContent() {
       const data = await response.json();
       setPodcasts(data.podcasts || []);
       setEpisodes((data.episodes || []).slice(0, 18));
+      setSearchedTerm(term);
     } finally {
       setLoading(false);
     }
@@ -35,7 +37,6 @@ function SearchContent() {
     if (term) {
       handleSearch(term);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [term]);
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -74,7 +75,7 @@ function SearchContent() {
         <div className="space-y-12">
           {podcasts.length > 0 && (
             <section>
-              <SectionHeader title={`Top podcasts for ${searchTerm}`} />
+              <SectionHeader title={`Top podcasts for ${searchedTerm}`} />
 
               <div className="flex gap-6 overflow-x-auto pb-4 custom-scrollbar">
                 {podcasts.map((podcast, index) => (
@@ -90,7 +91,7 @@ function SearchContent() {
 
           {episodes.length > 0 && (
             <section>
-              <SectionHeader title={`Top episodes for ${searchTerm}`} />
+              <SectionHeader title={`Top episodes for ${searchedTerm}`} />
 
               <div className="grid grid-cols-3 auto-rows-max gap-x-6 gap-y-3">
                 {episodes.map((episode, index) => (
